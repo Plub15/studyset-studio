@@ -1,0 +1,12 @@
+node_modules/
+reference/
+test-results/
+playwright-report/
+.DS_Store
+.local/
+dist/
+CODEX_HANDOFF.txt
+*.goodnotes
+*.zip
+.env*
+__pycache__/

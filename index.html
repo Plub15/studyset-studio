@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f7f5fa" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'none'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'" />
+    <meta name="description" content="Turn questions and answers into a Goodnotes study set. A simple, private flashcard converter that works on your device." />
+    <title>Studyset Studio · Make a Goodnotes study set</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/icon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#source-text">Skip to your cards</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="Studyset Studio home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="6" width="23" height="27" rx="5" transform="rotate(-12 8 6)" fill="currentColor" opacity=".2"/><rect x="9" y="8" width="24" height="27" rx="5" fill="currentColor"/><path d="M16 18h10M16 23h7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <span>Studyset <span class="brand-light">Studio</span></span>
+        </a>
+        <div class="header-actions">
+          <span class="platform-tag"><span aria-hidden="true"></span>For Goodnotes</span>
+          <button class="help-button" id="help-open" type="button" aria-haspopup="dialog" aria-label="How to use Studyset Studio">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 1.9-2.4 3.4"/><path d="M12 16.5h.01"/></svg>
+            <span>How it works</span>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>LESS SETUP. MORE STUDYING.</p>
+            <h1 id="page-title">Your next study set,<br /><span>ready in a moment.</span></h1>
+            <p class="hero-description">Bring your questions and answers. We’ll turn them into flashcards for Goodnotes.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <span class="art-orbit"></span>
+            <span class="art-card art-card-back"><span>Q</span><i></i><i></i></span>
+            <span class="art-card art-card-front"><span>A</span><svg viewBox="0 0 40 40" fill="none"><path d="m12 21 5.5 5.5L29 14" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <svg class="art-sparkle sparkle-one" viewBox="0 0 28 28" fill="none"><path d="M14 2c0 8-4 12-12 12 8 0 12 4 12 12 0-8 4-12 12-12C18 14 14 10 14 2Z" fill="currentColor"/></svg>
+            <svg class="art-sparkle sparkle-two" viewBox="0 0 28 28" fill="none"><path d="M14 3v22M3 14h22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="art-dot"></span>
+          </div>
+        </section>
+
+        <noscript><div class="noscript-notice" role="alert">Please enable JavaScript to create your study set. Your questions and answers are processed on your device.</div></noscript>
+
+        <div class="workspace">
+          <section class="panel source-panel" aria-labelledby="source-heading">
+            <div class="section-heading">
+              <span class="step-number" aria-hidden="true">01</span>
+              <div>
+                <h2 id="source-heading">Start with your cards</h2>
+                <p>Paste a list or bring a file you already have.</p>
+              </div>
+            </div>
+
+            <div class="drop-zone" id="drop-zone" role="region" aria-label="Upload a questions and answers file">
+              <span class="upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z"/><path d="M14 3v6h6M12 17v-5m-2 2 2-2 2 2"/></svg></span>
+              <div class="upload-copy"><p>Drop your file here</p><span>CSV or TXT · question, answer</span></div>
+              <button id="choose-file" class="button button-outline choose-file" type="button">
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2.5 5.5a1.5 1.5 0 0 1 1.5-1.5h4l2 2h6A1.5 1.5 0 0 1 17.5 7.5v7A1.5 1.5 0 0 1 16 16H4a1.5 1.5 0 0 1-1.5-1.5v-9Z"/></svg>
+                Choose file
+              </button>
+              <input id="file-input" class="visually-hidden" type="file" accept=".txt,.csv,text/plain,text/csv" tabindex="-1" aria-label="Choose a CSV or text file" />
+            </div>
+
+            <div class="editor-toolbar">
+              <label for="source-text">QUESTIONS &amp; ANSWERS</label>
+              <div class="editor-actions">
+                <button id="load-example" class="text-button" type="button">Try an example</button>
+                <span class="action-separator" aria-hidden="true"></span>
+                <button id="clear-input" class="text-button text-button-muted" type="button">Clear</button>
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <textarea id="source-text" rows="11" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" aria-describedby="format-hint input-limits source-status error-message" placeholder="1,하나&#10;하나,1&#10;2,둘&#10;둘,2"></textarea>
+            </div>
+            <div class="editor-meta">
+              <p id="source-status" role="status" aria-live="polite">Your study set starts here.</p>
+              <span class="pair-count"><span id="input-count">0</span> pairs</span>
+            </div>
+            <p id="error-message" class="error-message" role="alert" hidden></p>
+            <div class="format-note" id="format-hint">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 9v4M10 6.5h.01"/></svg>
+              <p>One question,answer pair per record. No header. Quote text with commas or line breaks: <code>"Hello, friend",안녕</code></p>
+            </div>
+            <p class="input-limits" id="input-limits">Up to 2 MiB of UTF-8 text · 5,000 output cards · 20,000 characters per side.</p>
+          </section>
+
+          <section class="panel setup-panel" aria-labelledby="setup-heading">
+            <div class="section-heading">
+              <span class="step-number" aria-hidden="true">02</span>
+              <div><h2 id="setup-heading">Make it a study set</h2><p>A name, a quick look, and you’re ready.</p></div>
+            </div>
+
+            <div class="field">
+              <label for="deck-title">Study set name</label>
+              <input id="deck-title" type="text" value="My study set" maxlength="180" autocomplete="off" enterkeyhint="done" aria-describedby="title-error" />
+              <p id="title-error" class="error-message" role="alert" hidden>Enter a name for your study set.</p>
+            </div>
+
+            <label class="reverse-option" for="reverse-cards">
+              <input id="reverse-cards" type="checkbox" aria-describedby="reverse-description" />
+              <span class="checkbox-visual" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="m4 8 2.5 2.5L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="reverse-copy"><span class="option-title">Create both directions</span><span id="reverse-description">Add A → Q immediately after each Q → A.</span></span>
+              <svg class="reverse-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4 4-4-4 4-4"/></svg>
+            </label>
+
+            <div class="preview-heading"><h3>Take a peek</h3><span class="card-count"><span id="card-count">0</span> cards</span></div>
+            <button id="preview-card" class="preview-card" type="button" aria-label="Flip the preview card to see its answer" disabled>
+              <span id="preview-side" class="preview-side">QUESTION</span>
+              <span id="preview-text" class="preview-text">Your first card<br />will appear here.</span>
+              <span class="flip-hint"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M13.8 6a5.5 5.5 0 1 0 .6 5.1M14 2.7V6h-3.3"/></svg>Tap to flip</span>
+            </button>
+            <div class="preview-navigation" role="group" aria-label="Preview card navigation">
+              <button id="previous-card" class="icon-button" type="button" aria-label="Previous card" disabled><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m12 5-5 5 5 5"/></svg></button>
+              <span id="preview-position" aria-live="polite">0 of 0</span>
+              <button id="next-card" class="icon-button" type="button" aria-label="Next card" disabled><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5"/></svg></button>
+            </div>
+
+            <div class="export-area">
+              <button id="download-button" class="button button-primary" type="button" disabled>
+                <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 3v10m-4-4 4 4 4-4M4 14v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4"/></svg>
+                <span id="download-label">Create study set</span>
+                <span class="file-extension">.goodnotes</span>
+              </button>
+              <button id="cancel-build" class="text-button" type="button" hidden>Cancel creation</button>
+              <button id="retry-conversion" class="text-button" type="button" hidden>Try conversion again</button>
+              <button id="share-button" class="button button-outline share-button" type="button" hidden><svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 14V3M7 7l4-4 4 4M6 10H4v9h14v-9h-2"/></svg><span>Share file</span></button>
+              <p id="export-status" class="export-status" role="status" aria-live="polite"></p>
+              <div id="download-help" class="download-help" hidden><p><strong>Next, open it in Goodnotes.</strong> After downloading, check your browser’s Downloads. On iPhone or iPad, look in Files → Downloads (iCloud Drive or On My iPhone/iPad), then Share → Goodnotes. Or in Goodnotes, choose New → Import.</p></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="privacy-note"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m10 2 6 2.5v4.3c0 3.8-2.4 6.5-6 8.2-3.6-1.7-6-4.4-6-8.2V4.5L10 2Z"/><path d="m7.5 9.5 1.7 1.7 3.3-3.4"/></svg><p>Your cards stay on your device. No account, no uploads.</p></div>
+      </main>
+
+      <footer class="site-footer"><span>A small tool for your next big learning goal.</span><span>Independent tool · Not affiliated with Goodnotes</span></footer>
+    </div>
+
+    <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+      <div class="dialog-heading"><div><p class="eyebrow">FROM LIST TO FLASHCARDS</p><h2 id="help-title">A minute of setup.</h2></div><button id="help-close" class="icon-button" type="button" aria-label="Close help"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></div>
+      <ol class="help-steps">
+        <li><span class="help-step-number" aria-hidden="true">1</span><div><h3>Bring your questions and answers</h3><p>Paste text or choose a UTF-8 CSV or TXT file. Separate each question and answer with a comma. Every record becomes a card, including duplicates.</p><pre><code>1,하나
+2,둘
+"Hello, friend",안녕</code></pre><p>Do not add a header. Use straight double quotes around fields containing commas or line breaks. Write a quotation mark inside a quoted field as <code>""</code>. Blank lines are ignored.</p></div></li>
+        <li><span class="help-step-number" aria-hidden="true">2</span><div><h3>Check your study set</h3><p>Give it a name and flip through the preview. Turn on reverse cards to practice the answer as a question, too.</p></div></li>
+        <li><span class="help-step-number" aria-hidden="true">3</span><div><h3>Take it to Goodnotes</h3><p>Choose Create study set, then Download study set. If your browser supports sharing this file, you can choose Share file. Find downloads in your browser or in Files → Downloads on iPhone and iPad. In Goodnotes, choose New → Import and select the <code>.goodnotes</code> file.</p><p>Native exports use an unofficial, template-based format. This website’s exports have not yet been import-tested in Goodnotes on Apple hardware.</p></div></li>
+      </ol>
+      <div class="help-privacy"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m10 2 6 2.5v4.3c0 3.8-2.4 6.5-6 8.2-3.6-1.7-6-4.4-6-8.2V4.5L10 2Z"/><path d="m7.5 9.5 1.7 1.7 3.3-3.4"/></svg><p>Everything is processed in this browser. Your card content is never sent to a server.</p></div>
+    </dialog>
+  </body>
+</html>

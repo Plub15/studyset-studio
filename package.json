@@ -1,0 +1,22 @@
+{
+  "name": "studyset-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:converter": "node tests/converter.test.mjs",
+    "test:browser": "node scripts/build.mjs && playwright test",
+    "test:all": "pnpm test && pnpm test:browser"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22"
+  }
+}
