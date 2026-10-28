@@ -193,6 +193,9 @@ test('share feature uses an actual ready file in the click activation; cancellat
 });
 
 test('worker failure is recoverable and cancel discards in-flight exports', async ({ page }) => {
+  // WebKit's native insertion of 5,000 textarea lines can take over 50 seconds
+  // on a shared Linux runner, before the conversion worker even starts.
+  test.slow();
   await page.addInitScript(() => {
     const NativeWorker = window.Worker;
     let failOnce = true;

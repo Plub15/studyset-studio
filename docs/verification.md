@@ -36,6 +36,8 @@ The [Test and publish workflow](https://github.com/Plub15/studyset-studio/action
 
 The first Linux CI run exposed WebKitGTK's normalization of spaces to underscores in downloaded filenames (16 download assertions failed; the other 72 browser checks passed). Filenames now normalize whitespace explicitly on every platform, preserving Unicode and the `.goodnotes` extension. The title inside the archive is unchanged. The workflow distributes the full matrix across four test runners; all must pass before deployment.
 
+The next run passed every filename assertion but timed out in two maximum-size cancellation tests. The trace showed WebKit spending 54 seconds inserting the 5,000-line textarea fixture, before conversion started. This stress test now has a 180-second total budget; the cancellation, retry, and stale-result assertions remain unchanged. Other tests retain their 60-second budget, and conversion's own 60-second watchdog is unchanged.
+
 ## Remaining physical checks
 
 WebKit device profiles are browser emulation. No physical iPhone/iPad, real OS share-sheet destination, or Goodnotes application import was tested. The sharing tests replace `navigator.canShare` and `navigator.share` to verify that the actual nonempty `File` is checked, transient click activation is preserved, and cancellation/unsupported cases retain downloading. They do not prove OS acceptance of the `.goodnotes` extension.
