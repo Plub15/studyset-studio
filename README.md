@@ -12,7 +12,7 @@ A private, browser-only tool that turns question–answer CSV text into a native
 4. Choose **Create study set**, then **Download study set**. On browsers that accept this file through Web Share, **Share file** also appears.
 5. Find the file in your browser's Downloads. On iPhone/iPad, check **Files → Downloads** in iCloud Drive or On My iPhone/iPad. Use Share → Goodnotes, or choose **New → Import** inside Goodnotes.
 
-The creation step prepares the file in a worker. Download and Share then run directly from your next click/tap, keeping the user activation required by native sharing. The site cannot confirm a browser download was saved or that Goodnotes completed an import; its status messages say this explicitly.
+The creation step prepares the file in a worker. Download and Share then run directly from your next click/tap, keeping the user activation required by native sharing. Download filenames preserve Unicode, replace whitespace with underscores, and remove filesystem-unsafe characters so names stay consistent across browsers. The title inside Goodnotes is unchanged. The site cannot confirm a browser download was saved or that Goodnotes completed an import; its status messages say this explicitly.
 
 ## Input format
 

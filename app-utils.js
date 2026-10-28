@@ -28,7 +28,9 @@ export function downloadName(title) {
     if (encoder.encode(safe + character).length > 180) break;
     safe += character;
   }
-  return `${safe.replace(/[. ]+$/g, '') || 'Study set'}.goodnotes`;
+  // WebKitGTK replaces spaces during download. Use one explicit filename on
+  // every platform while preserving the title (and Unicode) inside the set.
+  return `${(safe.replace(/[. ]+$/g, '') || 'Study set').replace(/\s+/gu, '_')}.goodnotes`;
 }
 
 export function decodeFile(buffer) {

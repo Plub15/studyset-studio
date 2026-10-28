@@ -5,7 +5,7 @@ Checked on 29 October 2026 (Asia/Bangkok). Local host: Windows; Playwright 1.64.
 ## Executed local checks
 
 - 36 Node tests passed, covering CSV parsing, malformed input, native archive framing/content/order, Unicode byte lengths, uint64 precision, unique IDs, CRC corruption, decoding, filenames, and size limits.
-- All 88 browser cases reported passing: eight checks on each of the 11 profiles below. The Windows sandbox prevented automatic local test-server cleanup after the cases finished; CI separately runs the complete suite and gates deployment on its exit status.
+- All 88 browser cases passed with exit code 0: eight checks on each of the 11 profiles below. The local test server was run separately to avoid the Windows sandbox's automatic process-cleanup restriction. CI separately runs the complete suite and gates deployment on its exit status.
 - Each profile downloaded both a Unicode 12-card reversed set and a 1,000-card set. Every downloaded file was independently checked using Python `zipfile`, CRC checks, and a separate protobuf decoder. The decoder verified exact title, count, content, order, IDs, counters, selection, deletion history, and the full 64-bit replica integer.
 - Network observation allowed only public application resource GETs, without query strings or request bodies. No content transmission was observed. The application contains no upload/fetch/analytics code and uses a restrictive Content Security Policy.
 - axe checks found no WCAG 2 A/AA or 2.1 AA violations in the populated page and open help dialog. Keyboard operation/focus, 44px controls, 16px input text, reduced motion, and horizontal overflow were also checked. Automated checks are not a complete manual screen-reader audit.
@@ -33,6 +33,8 @@ Checked on 29 October 2026 (Asia/Bangkok). Local host: Windows; Playwright 1.64.
 ## Deployment checks
 
 The [Test and publish workflow](https://github.com/Plub15/studyset-studio/actions) runs unit and full browser tests before deployment, then a real download smoke test against the public URL. Consult its completed run for deployment status; a successful build alone does not establish publication.
+
+The first Linux CI run exposed WebKitGTK's normalization of spaces to underscores in downloaded filenames (16 download assertions failed; the other 72 browser checks passed). Filenames now normalize whitespace explicitly on every platform, preserving Unicode and the `.goodnotes` extension. The title inside the archive is unchanged. The workflow distributes the full matrix across four test runners; all must pass before deployment.
 
 ## Remaining physical checks
 

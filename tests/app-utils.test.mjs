@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { decodeFile, downloadName, validateSize, validateCards, MAX_INPUT_BYTES } from '../app-utils.js';
 
 test('filenames preserve Unicode, remove path/control characters, avoid reserved names, and fit filesystem limits', () => {
-  assert.equal(downloadName('한국어 ภาษาไทย 🐱'), '한국어 ภาษาไทย 🐱.goodnotes');
+  assert.equal(downloadName('한국어 ภาษาไทย 🐱'), '한국어_ภาษาไทย_🐱.goodnotes');
   assert.equal(downloadName('../bad:name?\u0000'), '..-bad-name--.goodnotes');
-  assert.equal(downloadName('CON'), 'Study set - CON.goodnotes');
-  assert.equal(downloadName('...'), 'Study set.goodnotes');
+  assert.equal(downloadName('CON'), 'Study_set_-_CON.goodnotes');
+  assert.equal(downloadName('...'), 'Study_set.goodnotes');
   assert.equal(downloadName('Set.goodnotes'), 'Set.goodnotes');
   assert.ok(new TextEncoder().encode(downloadName('한🐱'.repeat(100))).length < 255);
   assert.ok(!downloadName('🐱'.repeat(100)).includes('\ufffd'));

@@ -16,6 +16,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
@@ -26,25 +30,33 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
       - run: pnpm exec playwright install --with-deps chromium webkit
-      - run: pnpm test:browser
+      - run: pnpm test:browser --shard=${{ matrix.shard }}/4
       - name: Keep browser reports and screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: browser-verification
+          name: browser-verification-${{ matrix.shard }}
           path: |
             playwright-report/
             test-results/
           retention-days: 14
-      - run: pnpm build
+  build:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: node scripts/build.mjs
       - name: Package only the public site
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       pages: write

@@ -16,7 +16,7 @@ async function getDownload(page, info, title, cards) {
   const downloadEvent = page.waitForEvent('download');
   await button.click();
   const download = await downloadEvent;
-  expect(download.suggestedFilename()).toBe(`${title}.goodnotes`);
+  expect(download.suggestedFilename()).toBe(`${title.replaceAll(' ', '_')}.goodnotes`);
   expect(await download.failure()).toBeNull();
   const archive = info.outputPath('download.goodnotes');
   await download.saveAs(archive);
@@ -187,7 +187,7 @@ test('share feature uses an actual ready file in the click activation; cancellat
   const checked = await page.evaluate(() => ({ checks: window.shareChecks, shared: window.sharedFile }));
   expect(checked.checks[0].isFile).toBe(true);
   expect(checked.checks[0].size).toBeGreaterThan(100);
-  expect(checked.shared.name).toBe('My study set.goodnotes');
+  expect(checked.shared.name).toBe('My_study_set.goodnotes');
   expect(checked.shared.active).toBe(true);
   await expect(page.locator('#download-button')).toBeEnabled();
 });
