@@ -32,6 +32,10 @@ Checked on 29 October 2026 (Asia/Bangkok). Local host: Windows; Playwright 1.64.
 
 ## Deployment checks
 
+**Published and verified:** [Studyset Studio](https://plub15.github.io/studyset-studio/). [Workflow run 40746653610](https://github.com/Plub15/studyset-studio/actions/runs/40746653610) succeeded for application commit `5dbbc6f`: all four browser-test shards, unit tests, build, Pages deployment, and the public Chromium download smoke test passed.
+
+After deployment, three additional smoke tests against the actual HTTPS URL passed on desktop Chromium, iPhone 13 WebKit, and iPad Mini WebKit. Each generated and downloaded a Unicode reversed set and independently checked its ZIP/protobuf bytes with Python. The homepage returned HTTP 200; the private reference archive, original handoff, and local credential-helper paths returned HTTP 404. This record was added after verification without changing the deployed application.
+
 The [Test and publish workflow](https://github.com/Plub15/studyset-studio/actions) runs unit and full browser tests before deployment, then a real download smoke test against the public URL. Consult its completed run for deployment status; a successful build alone does not establish publication.
 
 The first Linux CI run exposed WebKitGTK's normalization of spaces to underscores in downloaded filenames (16 download assertions failed; the other 72 browser checks passed). Filenames now normalize whitespace explicitly on every platform, preserving Unicode and the `.goodnotes` extension. The title inside the archive is unchanged. The workflow distributes the full matrix across four test runners; all must pass before deployment.
